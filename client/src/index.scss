@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
+@import "common/styles/reset-styles.scss";
+
+:root {
+  --appFontSize: 18px;
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--appFontSize);
+}
+
+
+body {
+  --gray-700: hsl(0, 0%, 66%);
+  --gray-600: hsl(0, 0%, 80%);
+  --gray-300: hsl(0, 0%, 94%);
+
+  --black: hsl(0, 0%, 0%);
+  --white: hsl(0, 0%, 100%);
+}
