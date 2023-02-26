@@ -2,7 +2,20 @@
 @import "common/styles/reset-styles.scss";
 
 :root {
-  --appFontSize: 18px;
+  --appFontSize: 16px;
+
+  --borderRadius-700: 1.35em;
+  --borderRadius-300: .55em;
+
+  --gap-lg: 1.55em;
+  --gap-700: 1.1em;
+  --gap-600: 1em;
+  --gap-300: .55em;
+
+  --font-size-large: 1.45em;
+  --font-size-regular: 1em;
+  --font-size-small: .8em;
+
 }
 
 html {
@@ -12,10 +25,6 @@ html {
 
 
 body {
-  --gray-700: hsl(0, 0%, 66%);
-  --gray-600: hsl(0, 0%, 80%);
-  --gray-300: hsl(0, 0%, 94%);
-
-  --black: hsl(0, 0%, 0%);
-  --white: hsl(0, 0%, 100%);
+  overflow-x: hidden;
 }
+
