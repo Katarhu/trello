@@ -18,10 +18,14 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@auth/*": ["/src/auth/*"],
+      "@auth/*": ["src/auth/*"],
+      "@users/*": ["src/users/*"],
       "@core/*": ["src/core/*"],
+      "@config/*": ["src/config/*"],
       "@models/*": ["src/models/*"],
-      "@helpers/*": ["/src/helpers/*"]
+      "@models": ["src/models"],
+      "@helpers/*": ["src/helpers/*"],
+      "@helpers": ["src/helpers"]
     }
   }
 }
