@@ -4,6 +4,7 @@ import {
   FormEvent,
   FormEventHandler,
   useCallback,
+  useEffect,
   useState,
 } from "react";
 import { validateField, IValidator } from "@utils";
@@ -13,7 +14,7 @@ interface IFormValue {
   value: string;
   validators?: IValidator;
   touched: boolean;
-  errors: string[];
+  errors: string[] | null;
   name: string;
   onChange: ChangeEventHandler;
   onBlur: FocusEventHandler;
@@ -34,23 +35,39 @@ type UseFormReturn<TKeys extends string> = IFormState<TKeys> & {
 export function useForm<TKeys extends string>(
   initialState: IInitialState<TKeys> | (() => IInitialState<TKeys>)
 ): UseFormReturn<TKeys> {
-  const onChange = useCallback<ChangeEventHandler>((event) => {
+  const onChange: ChangeEventHandler = (event) => {
     const { name, value } = event.target as HTMLInputElement;
+    const typedKey = name as TKeys;
 
-    setFormState((prev) => {
-      const typedKey = name as TKeys;
+    setFormState((prevState) => {
+      const updatedField = {
+        ...prevState[typedKey],
+        value,
+      };
 
       return {
-        ...prev,
-        [typedKey]: {
-          ...prev[typedKey],
-          value,
-        },
+        ...prevState,
+        [typedKey]: updatedField,
+      };
+    });
+  };
+
+  const onBlur = useCallback<FocusEventHandler>((event) => {
+    const { name } = event.target as HTMLInputElement;
+    const typedKey = name as TKeys;
+
+    setFormState((prevState) => {
+      const updatedField = {
+        ...prevState[typedKey],
+        touched: true,
+      };
+
+      return {
+        ...prevState,
+        [typedKey]: updatedField,
       };
     });
   }, []);
-
-  const onBlur = useCallback<FocusEventHandler>((event) => {}, []);
 
   const [formState, setFormState] = useState(() => {
     let state: IFormState<TKeys>;

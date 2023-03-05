@@ -19,8 +19,14 @@ export const LoginPage = () => {
       validators: { minLength: 6, maxLength: 30, email: true },
     },
     username: { value: "", validators: { minLength: 6, maxLength: 30 } },
-    password: { value: "", validators: { minLength: 6, maxLength: 60 } },
-    passwordRepeat: { value: "", validators: { minLength: 6, maxLength: 60 } },
+    password: {
+      value: "",
+      validators: { minLength: 6, maxLength: 60, password: "passwordRepeat" },
+    },
+    passwordRepeat: {
+      value: "",
+      validators: { minLength: 6, maxLength: 60, password: "password" },
+    },
   });
 
   const handleFormSubmit = () => {};
@@ -39,16 +45,8 @@ export const LoginPage = () => {
               Welcome to task manager
             </Heading>
             <Text fontSize="1.25em">Start managing you tasks right off</Text>
-            <TextField
-              variant="outlined"
-              labelText="Email"
-              {...email}
-            />
-            <TextField
-              variant="outlined"
-              labelText="Username"
-              {...username}
-            />
+            <TextField variant="outlined" labelText="Email" {...email} />
+            <TextField variant="outlined" labelText="Username" {...username} />
             <TextField
               variant="outlined"
               labelText="Password"

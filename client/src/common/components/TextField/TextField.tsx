@@ -32,6 +32,8 @@ export const TextField = memo(
       <InputLength value={value} maxLength={maxLength} />
     ) : null;
 
+    console.log(errors);
+
     return (
       <Container flex column gap="0.5em">
         <TextFieldContainer role="textbox" inputStyle={inputStyle}>
