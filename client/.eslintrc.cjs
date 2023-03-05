@@ -31,5 +31,6 @@ module.exports = {
         "react/jsx-props-no-spreading": 0,
         "react/require-default-props": 0,
         "react/default-props-match-prop-types": 0,
+        "no-nested-ternary": 0,
     }
 }

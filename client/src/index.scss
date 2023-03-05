@@ -3,6 +3,8 @@
 
 :root {
   --appFontSize: 16px;
+  --headerHeigth: 4em;
+  --mainLayoutPadding: 1.55em;
 
   --borderRadius-700: 1.35em;
   --borderRadius-300: .55em;
@@ -15,7 +17,6 @@
   --font-size-large: 1.45em;
   --font-size-regular: 1em;
   --font-size-small: .8em;
-
 }
 
 html {
@@ -28,3 +29,6 @@ body {
   overflow-x: hidden;
 }
 
+#root {
+  height: 100%;
+}

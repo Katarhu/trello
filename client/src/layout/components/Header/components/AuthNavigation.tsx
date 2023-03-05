@@ -1,11 +1,13 @@
 import { Divider, Image, SearchBar } from "@components";
 import Boards from "@assets/Boards.svg";
 import styled from "styled-components";
+import { AppLink } from "@common/components";
+import { ROUTES } from "@constants";
 
 export const AuthNavigation = () => {
   return (
     <>
-      <HeaderLink>
+      <HeaderLink to={ROUTES.BOARDS}>
         <Image src={Boards} />
         <HeaderLinkText>Boards</HeaderLinkText>
       </HeaderLink>
@@ -17,7 +19,7 @@ export const AuthNavigation = () => {
   );
 };
 
-const HeaderLink = styled.div`
+const HeaderLink = styled(AppLink)`
   flex-shrink: 0;
   display: flex;
   align-items: center;

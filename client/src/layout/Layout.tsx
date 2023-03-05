@@ -10,19 +10,18 @@ export const Layout = ({ children }: LayoutProps) => {
   return (
     <AppLayout>
       <Header />
-      <MainContainer>
-          {children}
-      </MainContainer>
+      <MainContainer>{children}</MainContainer>
     </AppLayout>
   );
 };
 
 const AppLayout = styled.div`
   width: 100%;
+  height: 100%;
 `;
 
 const MainContainer = styled.main`
   width: 100%;
-  height: 100%;
-  padding: 1.55em;
+  height: calc(100vh - var(--headerHeigth));
+  padding: var(--mainLayoutPadding);
 `;

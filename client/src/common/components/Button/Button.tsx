@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import React, { MouseEventHandler, ReactNode } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 import { Link, LinkProps } from "react-router-dom";
+import { DefaultButtonAttributes } from "@types";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends DefaultButtonAttributes {
   children: ReactNode;
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
   submit?: boolean;
 }
 

@@ -1,6 +1,12 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { ROUTES } from "@constants";
-import { ErrorPage, BoardsPage, BoardPage } from "@pages";
+import {
+  ErrorPage,
+  BoardsPage,
+  BoardPage,
+  LoginPage,
+  RegisterPage,
+} from "@pages";
 import App from "../App";
 
 export const router = createBrowserRouter([
@@ -15,6 +21,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.BOARD_ID(),
         element: <BoardPage />,
+      },
+      {
+        path: ROUTES.LOGIN,
+        element: <LoginPage />,
+      },
+      {
+        path: ROUTES.REGISTER,
+        element: <RegisterPage />,
       },
       {
         path: ROUTES.NON_EXISTING,

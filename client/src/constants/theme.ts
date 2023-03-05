@@ -5,6 +5,8 @@ export const theme = {
   "gray-400": "hsl(0, 0%, 88%)",
   "gray-300": "hsl(0, 0%, 96%)",
 
+  "blue-700": "hsl(214,95%,59%)",
+
   black: "hsl(0, 0%, 0%)",
   white: "hsl(0, 0%, 100%)",
 } as const;

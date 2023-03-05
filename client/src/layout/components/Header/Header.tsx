@@ -6,12 +6,16 @@ import {
   AuthUserNavigation,
   PublicButtons,
 } from "./components";
+import { AppLink } from "@common/components";
+import {ROUTES} from "@constants";
 
 export const Header = () => {
   return (
     <AppHeader>
       <HeaderImageContainer>
-        <Image src={Logo} />
+        <AppLink to={ROUTES.BOARDS}>
+          <Image src={Logo} />
+        </AppLink>
       </HeaderImageContainer>
 
       <Divider />
@@ -26,7 +30,7 @@ export const Header = () => {
 
 const AppHeader = styled.header`
   width: 100%;
-  height: 4em;
+  height: var(--headerHeigth);
 
   padding: 0.8em 1.5em;
   border-bottom: 1px solid ${({ theme }) => theme["gray-500"]};

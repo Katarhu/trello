@@ -33,7 +33,8 @@
       "@assets": ["assets"],
       "@types/*": ["types/*"],
       "@types": ["types"],
-      "@pages": ["pages"]
+      "@pages": ["pages"],
+      "@utils": ["utils"]
     }
   },
   "include": [
