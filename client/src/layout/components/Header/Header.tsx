@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Divider, Image } from "@components";
 import Logo from "@assets/Logo.svg";
+import { AppLink } from "@common/components";
+import { ROUTES } from "@constants";
 import {
   AuthNavigation,
   AuthUserNavigation,
@@ -11,7 +13,9 @@ export const Header = () => {
   return (
     <AppHeader>
       <HeaderImageContainer>
-        <Image src={Logo} />
+        <AppLink to={ROUTES.BOARDS}>
+          <Image src={Logo} />
+        </AppLink>
       </HeaderImageContainer>
 
       <Divider />
@@ -19,14 +23,14 @@ export const Header = () => {
       <AuthNavigation />
 
       <PublicButtons />
-      <AuthUserNavigation />
+      {/*<AuthUserNavigation />*/}
     </AppHeader>
   );
 };
 
 const AppHeader = styled.header`
   width: 100%;
-  height: 4em;
+  height: var(--headerHeigth);
 
   padding: 0.8em 1.5em;
   border-bottom: 1px solid ${({ theme }) => theme["gray-500"]};

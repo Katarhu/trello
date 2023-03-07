@@ -1,0 +1,1 @@
+export { ParallaxItem } from "./ParallaxItem";
