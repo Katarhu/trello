@@ -3,16 +3,14 @@ export interface IValidator {
   minLength?: number;
   email?: boolean;
   required?: boolean;
-  password?: string;
 }
 
 const maxLengthMessage = (maxLength: number) =>
-  `This field length should not be less than ${maxLength}`;
+  `Length of this flied should be less than ${maxLength}`;
 const minLengthMessage = (minLength: number) =>
-  `This field length should not be more than ${minLength}`;
+  `Length of this flied should be more than ${minLength}`;
 const emailMessage = () => "This field should be valid email";
 const requiredMessage = () => "This field is required";
-const passwordMessage = () => "Passwords must match";
 
 const isValueLengthValid = (
   value: string,
@@ -21,9 +19,9 @@ const isValueLengthValid = (
 ): boolean => {
   switch (validationType) {
     case "maxLength":
-      return value.length < length;
+      return value.length <= length;
     case "minLength":
-      return value.length > length;
+      return value.length >= length;
     default:
       return false;
   }
@@ -39,7 +37,7 @@ export const validateField = (
 ): string[] | null => {
   const errors: string[] = [];
 
-  if (!validators) return null;
+  if (validators === undefined) return null;
 
   Object.keys(validators).forEach((key) => {
     switch (key) {
@@ -62,15 +60,6 @@ export const validateField = (
         if (value.length) break;
         errors.push(requiredMessage());
 
-        break;
-
-      case "password":
-        console.log(validators.password)
-        if (!validators.password) break;
-
-        if (validators.password === value) break;
-
-        errors.push(passwordMessage());
         break;
 
       case "email":

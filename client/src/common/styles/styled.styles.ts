@@ -2,8 +2,8 @@ import { css } from "styled-components";
 import { IFlexBoxProps, ISizableProps, ITextProps } from "@types";
 
 export const sizableCss = css<ISizableProps>`
-  width: ${({ width }) => (width ? `${width}%` : "100%")};
-  max-width: ${({ maxWidth, fullWidth }) => (fullWidth ? "100%" : maxWidth)};
+  width: ${({ width, fullWidth }) => (fullWidth ? "100%" : width)};
+  max-width: ${({ maxWidth }) => maxWidth};
 
   height: ${({ height }) => height ?? "100%"};
   max-height: ${({ maxHeight, fullHeight }) =>
@@ -24,4 +24,6 @@ export const textCss = css<ITextProps>`
   font-size: ${({ fontSize }) => fontSize};
   font-weight: ${({ bold, fontWeight }) => (bold ? 500 : fontWeight)};
   line-height: ${({ lineHeight }) => (lineHeight ? `${lineHeight}}%` : "150%")};
+  text-align: ${({ center, end }) =>
+    center ? "center" : end ? "end" : undefined};
 `;

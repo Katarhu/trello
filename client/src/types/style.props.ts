@@ -46,4 +46,6 @@ export interface ITextProps {
   bold?: boolean;
   fontWeight?: 300 | 400 | 500;
   lineHeight?: number;
+  center?: boolean;
+  end?: boolean;
 }

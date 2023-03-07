@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Divider, Image } from "@components";
 import Logo from "@assets/Logo.svg";
+import { AppLink } from "@common/components";
+import { ROUTES } from "@constants";
 import {
   AuthNavigation,
   AuthUserNavigation,
   PublicButtons,
 } from "./components";
-import { AppLink } from "@common/components";
-import {ROUTES} from "@constants";
 
 export const Header = () => {
   return (
@@ -23,7 +23,7 @@ export const Header = () => {
       <AuthNavigation />
 
       <PublicButtons />
-      <AuthUserNavigation />
+      {/*<AuthUserNavigation />*/}
     </AppHeader>
   );
 };

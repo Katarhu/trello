@@ -4,10 +4,9 @@ import {
   FormEvent,
   FormEventHandler,
   useCallback,
-  useEffect,
   useState,
 } from "react";
-import { validateField, IValidator } from "@utils";
+import { isFormValid, IValidator, validateField } from "@utils";
 
 interface IFormValue {
   maxLength?: number;
@@ -30,20 +29,27 @@ type IInitialState<TKeys extends string> = {
 
 type UseFormReturn<TKeys extends string> = IFormState<TKeys> & {
   handleSubmit: (callback: () => void) => FormEventHandler;
+  isValid: boolean;
 };
 
 export function useForm<TKeys extends string>(
   initialState: IInitialState<TKeys> | (() => IInitialState<TKeys>)
 ): UseFormReturn<TKeys> {
-  const onChange: ChangeEventHandler = (event) => {
-    const { name, value } = event.target as HTMLInputElement;
+  const [isValid, setIsValid] = useState(false);
+  const handleChange = (name: string, value: string, touched?: boolean) => {
     const typedKey = name as TKeys;
+
+    const errors = validateField(value, formState[typedKey]?.validators);
 
     setFormState((prevState) => {
       const updatedField = {
         ...prevState[typedKey],
         value,
+        errors,
+        touched: touched ?? prevState[typedKey].touched,
       };
+
+      setIsValid(isFormValid({ ...prevState, [typedKey]: updatedField }));
 
       return {
         ...prevState,
@@ -52,21 +58,19 @@ export function useForm<TKeys extends string>(
     });
   };
 
+  const onChange: ChangeEventHandler = useCallback<ChangeEventHandler>(
+    (event) => {
+      const { name, value } = event.target as HTMLInputElement;
+
+      handleChange(name, value);
+    },
+    []
+  );
+
   const onBlur = useCallback<FocusEventHandler>((event) => {
-    const { name } = event.target as HTMLInputElement;
-    const typedKey = name as TKeys;
+    const { name, value } = event.target as HTMLInputElement;
 
-    setFormState((prevState) => {
-      const updatedField = {
-        ...prevState[typedKey],
-        touched: true,
-      };
-
-      return {
-        ...prevState,
-        [typedKey]: updatedField,
-      };
-    });
+    handleChange(name, value, true);
   }, []);
 
   const [formState, setFormState] = useState(() => {
@@ -81,22 +85,23 @@ export function useForm<TKeys extends string>(
     Object.keys(state).forEach((key) => {
       const typedKey = key as TKeys;
 
+      const errors = validateField(
+        state[typedKey].value,
+        state[typedKey]?.validators
+      );
+
       state[typedKey] = {
         ...state[typedKey],
         touched: false,
-        errors: null,
+        errors,
         name: key,
         onChange,
         onBlur,
         maxLength: state[typedKey]?.validators?.maxLength,
       };
-
-      if (state[typedKey].validators) {
-        Object.defineProperty(state[typedKey], "validators", {
-          enumerable: false,
-        });
-      }
     });
+
+    setIsValid(isFormValid(state));
 
     return state;
   });
@@ -106,5 +111,5 @@ export function useForm<TKeys extends string>(
     callback();
   };
 
-  return { ...formState, handleSubmit } as const;
+  return { ...formState, handleSubmit, isValid } as const;
 }

@@ -9,13 +9,20 @@ interface ImageProps extends DefaultImgAttributes, ISizableProps {
   contain?: boolean;
 }
 
-export const Image = memo(({ src, width, maxWidth, ...props }: ImageProps) => {
-  return (
-    <ImageContainer width={width} maxWidth={maxWidth}>
-      <AppImage src={src} alt="Trello logo image" {...props} />
-    </ImageContainer>
-  );
-});
+export const Image = memo(
+  ({ src, width, maxWidth, fullWidth, fullHeight, ...props }: ImageProps) => {
+    return (
+      <ImageContainer
+        width={width}
+        maxWidth={maxWidth}
+        fullWidth={fullWidth}
+        fullHeight={fullHeight}
+      >
+        <AppImage src={src} alt="Trello logo image" {...props} />
+      </ImageContainer>
+    );
+  }
+);
 
 Image.displayName = "Image";
 

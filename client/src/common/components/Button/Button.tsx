@@ -1,38 +1,83 @@
-import styled from "styled-components";
-import { MouseEventHandler, ReactNode } from "react";
+import styled, {
+  css,
+  DefaultTheme,
+  FlattenInterpolation,
+  ThemeProps,
+} from "styled-components";
 import { Link, LinkProps } from "react-router-dom";
-import { DefaultButtonAttributes } from "@types";
-
-interface ButtonProps extends DefaultButtonAttributes {
-  children: ReactNode;
-  onClick?: MouseEventHandler;
-  submit?: boolean;
-}
+import { ISizableProps } from "@types";
+import { sizableCss } from "@common/styles/styled.styles";
+import { getButtonStyle } from "@common/components/Button/utils";
+import { ButtonProps, ButtonVariant } from "./types";
 
 export const Button = ({
   children,
   onClick,
+  variant,
   submit = false,
   ...props
 }: ButtonProps) => {
-  return (
-    <button onClick={onClick} {...props} type={submit ? "submit" : "button"}>
-      {children}
-    </button>
-  );
-};
+  const buttonStyle = getButtonStyle(variant);
 
-export const AppLink = ({ to, children, ...props }: LinkProps) => {
   return (
-    <AppButton as={Link} to={to} {...props}>
+    <AppButton
+      onClick={onClick}
+      buttonStyle={buttonStyle}
+      type={submit ? "submit" : "button"}
+      {...props}
+    >
       {children}
     </AppButton>
   );
 };
 
-const AppButton = styled.button`
-  display: block;
+type AppLinkProps = LinkProps &
+  ISizableProps & { variant?: ButtonVariant; blue?: boolean };
+
+export const AppLink = ({
+  to,
+  children,
+  variant,
+  blue,
+  ...props
+}: AppLinkProps) => {
+  const buttonStyle = getButtonStyle(variant);
+
+  return (
+    <AppLinkStyled to={to} $buttonStyle={buttonStyle} $blue={blue} {...props}>
+      {children}
+    </AppLinkStyled>
+  );
+};
+
+const commonButtonCss = css`
+  display: inline-block;
   font-size: inherit;
-  max-width: fit-content;
-  max-height: fit-content;
+  background: transparent;
+`;
+
+const AppButton = styled.button<
+  ISizableProps & {
+    buttonStyle?: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+  }
+>`
+  ${commonButtonCss};
+  ${({ buttonStyle }) => buttonStyle};
+  ${sizableCss};
+`;
+
+type AppLinkStyledProps = ISizableProps & {
+  $blue?: boolean;
+  $buttonStyle?: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+};
+
+const AppLinkStyled = styled(Link)<AppLinkStyledProps>`
+  ${commonButtonCss};
+  ${sizableCss};
+  ${({ $buttonStyle }) => $buttonStyle};
+  color: ${({ $blue, theme }) => ($blue ? theme["blue-700"] : undefined)};
+
+  &:visited {
+    color: ${({ $blue, theme }) => ($blue ? theme["blue-700"] : undefined)};
+  }
 `;

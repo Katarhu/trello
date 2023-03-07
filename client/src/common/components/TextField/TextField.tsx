@@ -1,11 +1,16 @@
-import { memo, useId } from "react";
+import { memo, useId, useState } from "react";
 import styled, {
   DefaultTheme,
   FlattenInterpolation,
-  ThemeProps,
+  ThemedStyledProps,
 } from "styled-components";
 import { Container } from "@common/components";
-import { InputLength } from "@common/components/TextField/components";
+import {
+  ErrorTooltip,
+  InputHelper,
+  PasswordToggle,
+  InputLengthCounter,
+} from "./components";
 import { TextFieldProps } from "./types";
 import { getInputStyle } from "./utils/getInputStyle";
 
@@ -19,34 +24,66 @@ export const TextField = memo(
     errors,
     touched,
     maxLength,
+    type,
     ...props
   }: TextFieldProps) => {
     const id = useId();
     const inputStyle = getInputStyle(variant);
+    const [isShowPassword, setIsShowPassword] = useState(false);
+
+    const togglePassword = () => {
+      setIsShowPassword((prev) => !prev);
+    };
+
+    const isError =
+      errors === null ? false : !touched ? false : !!errors?.length;
 
     const labelItem = labelText ? (
       <InputLabel htmlFor={id}>{labelText}</InputLabel>
     ) : null;
 
+    const passwordToggleItem =
+      type === "password" ? (
+        <PasswordToggle value={isShowPassword} toggle={togglePassword} />
+      ) : null;
+
     const lengthCounterItem = maxLength ? (
-      <InputLength value={value} maxLength={maxLength} />
+      <InputLengthCounter isError={isError}>
+        {value.length}/{maxLength}
+      </InputLengthCounter>
     ) : null;
 
-    console.log(errors);
+    const helperContainer =
+      maxLength || type === "password" ? (
+        <InputHelper>
+          {passwordToggleItem}
+          {lengthCounterItem}
+        </InputHelper>
+      ) : null;
+
+    const inputType =
+      type === "password" ? (isShowPassword ? "text" : "password") : type;
 
     return (
       <Container flex column gap="0.5em">
-        <TextFieldContainer role="textbox" inputStyle={inputStyle}>
+        <TextFieldContainer
+          role="textbox"
+          inputStyle={inputStyle}
+          isError={isError}
+        >
           {labelItem}
           <AppTextField
             id={id}
+            isError={isError}
             onChange={onChange}
             value={value}
             placeholder={placeholder}
+            type={inputType}
             {...props}
           />
+          <ErrorTooltip errors={errors} touched={touched} />
         </TextFieldContainer>
-        {lengthCounterItem}
+        {helperContainer}
       </Container>
     );
   }
@@ -55,25 +92,37 @@ export const TextField = memo(
 TextField.displayName = "TextField";
 
 interface TextFieldContainerProps {
-  inputStyle?: FlattenInterpolation<ThemeProps<DefaultTheme>>;
+  inputStyle?: FlattenInterpolation<
+    ThemedStyledProps<{ isError: boolean }, DefaultTheme>
+  >;
+  isError: boolean;
 }
 
 const TextFieldContainer = styled.section<TextFieldContainerProps>`
-  --labelColor: ${({ theme }) => theme["gray-700"]};
-  --borderСolor: ${({ theme }) => theme["gray-700"]};
+  --labelColor: ${({ theme, isError }) =>
+    isError ? theme["red-700"] : theme["gray-700"]};
+  --borderСolor: ${({ theme, isError }) =>
+    isError ? theme["red-700"] : theme["gray-700"]};
 
-  ${({ inputStyle }) => inputStyle};
+  transition: color 0.2s ease;
   position: relative;
+  ${({ inputStyle }) => inputStyle};
 `;
 
-const AppTextField = styled.input<TextFieldProps>`
+const AppTextField = styled.input<{ isError: boolean }>`
   display: inline-block;
   font-size: 0.95em;
   width: 100%;
   background: transparent;
 
-  padding: var(--inputPaddingTop) var(--inputPaddingInline)
-    var(--inputPaddingBottom);
+  transition: padding-right 0.2s 0.2s ease;
+
+  padding: var(--inputPaddingTop)
+    calc(
+      var(--inputPaddingRight) +
+        ${({ isError }) => (isError ? "var(--errorContainerPadding)" : "0em")}
+    )
+    var(--inputPaddingBottom) var(--inputPaddingLeft);
 `;
 
 const InputLabel = styled.label`
@@ -87,7 +136,7 @@ const InputLabel = styled.label`
   left: var(--labelLeft, 0);
 
   white-space: nowrap;
-  max-width: var(--labelWidht);
+  max-width: var(--labelWidth);
   overflow: hidden;
   text-overflow: ellipsis;
 

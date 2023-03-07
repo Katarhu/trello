@@ -13,6 +13,7 @@ export type ContainerProps = IFlexBoxProps &
   DefaultDivAttributes;
 
 export const Container = ({ children, ...props }: ContainerProps) => {
+  console.log(props.fullWidth)
   return <AppContainer {...props}>{children}</AppContainer>;
 };
 
