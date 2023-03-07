@@ -108,6 +108,7 @@ export function useForm<TKeys extends string>(
 
   const handleSubmit = (callback: () => void) => (event: FormEvent) => {
     event.preventDefault();
+    if (!isValid) return;
     callback();
   };
 

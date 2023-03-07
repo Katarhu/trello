@@ -1,1 +1,1 @@
-export { Appear } from "./Appear";
+export { AppearAnimation } from "./Appear";

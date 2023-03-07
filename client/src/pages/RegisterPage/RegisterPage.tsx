@@ -8,12 +8,20 @@ import {
   Text,
   TextField,
 } from "@common/components";
-import styled from "styled-components";
 import { Image } from "@components";
-import LoginImage from "@assets/LoginImage.svg";
+import RegisterImage from "@assets/RegisterImage.svg";
 import { useForm } from "@hooks";
 import { ROUTES } from "@constants";
+import { AppearAnimation } from "@common/animations";
+import {
+  AuthContainer,
+  FormContainer,
+  FormImageContainer,
+} from "@common/components/Auth";
 
+const ANIMATION_DELAY_START = 0.1;
+const ANIMATION_DELAY_DIFF = 0.05;
+const ANIMATION_DELAY_MAX = 0.5;
 
 export const RegisterPage = () => {
   const { handleSubmit, email, username, password, isValid } = useForm({
@@ -40,9 +48,15 @@ export const RegisterPage = () => {
       fullWidth
     >
       <FormImageContainer>
-        <ParallaxItem center>
-          <Image src={LoginImage} maxWidth="750px" fullWidth />
-        </ParallaxItem>
+        <AppearAnimation
+          delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF}
+          y="20%"
+          delayMax={ANIMATION_DELAY_MAX}
+        >
+          <ParallaxItem center>
+            <Image src={RegisterImage} maxWidth="750px" fullWidth />
+          </ParallaxItem>
+        </AppearAnimation>
       </FormImageContainer>
       <FormContainer>
         <Form
@@ -51,49 +65,73 @@ export const RegisterPage = () => {
           maxWidth="500px"
         >
           <Container flex column gap="var(--gap-700)">
-            <Heading bold fontSize="1.75em">
-              Welcome to task manager
-            </Heading>
-            <Text fontSize="1.25em">Start managing you tasks right off</Text>
-            <TextField variant="outlined" labelText="Email" {...email} />
-            <TextField variant="outlined" labelText="Username" {...username} />
-            <TextField
-              variant="outlined"
-              labelText="Password"
-              type="password"
-              {...password}
-            />
-            <Button submit fullWidth variant="primary" disabled={!isValid}>
-              Create new account
-            </Button>
-            <Text fontSize="0.85em" center>
-              Already have an account?{" "}
-              <AppLink to={ROUTES.REGISTER} blue>
-                Log in
-              </AppLink>
-            </Text>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF}
+              y="300%"
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <Heading bold fontSize="1.75em">
+                Welcome to task manager
+              </Heading>
+            </AppearAnimation>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF}
+              y="450%"
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <Text fontSize="1.25em">Start managing you tasks right off</Text>
+            </AppearAnimation>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF * 2}
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <TextField variant="outlined" labelText="Email" {...email} />
+            </AppearAnimation>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF * 3}
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <TextField
+                variant="outlined"
+                labelText="Username"
+                {...username}
+              />
+            </AppearAnimation>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF * 4}
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <TextField
+                variant="outlined"
+                labelText="Password"
+                type="password"
+                {...password}
+              />
+            </AppearAnimation>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF * 5}
+              y="550%"
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <Button submit fullWidth variant="primary" disabled={!isValid}>
+                Create new account
+              </Button>
+            </AppearAnimation>
+            <AppearAnimation
+              delay={ANIMATION_DELAY_START + ANIMATION_DELAY_DIFF * 6}
+              y="1000%"
+              delayMax={ANIMATION_DELAY_MAX}
+            >
+              <Text fontSize="0.85em" center>
+                Already have an account?{" "}
+                <AppLink to={ROUTES.LOGIN} blue>
+                  Log in
+                </AppLink>
+              </Text>
+            </AppearAnimation>
           </Container>
         </Form>
       </FormContainer>
     </AuthContainer>
   );
 };
-
-const AuthContainer = styled(Container)`
-  max-height: calc(100h - var(--headerHeigth) - var(--mainLayoutPadding) * 2);
-  overflow: hidden;
-`;
-
-const FormImageContainer = styled.div`
-  flex-shrink: 5;
-  flex-grow: 1;
-
-  padding: 3em;
-`;
-
-const FormContainer = styled.div`
-  flex-shrink: 10;
-  flex-grow: 1;
-  display: grid;
-  place-items: center;
-`;
