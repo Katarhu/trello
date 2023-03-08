@@ -150,8 +150,9 @@ const InputLabel = styled.label`
 
   padding-inline: var(--labelPaddingInline);
 
-  transform: translateY(var(--labelTranslateY)) scale(var(--labelScale));
+  transform: translate3d(0, var(--labelTranslateY), 0) scale(var(--labelScale));
 
   transition: transform 0.15s linear, background-color 0s 0.1s linear,
-    padding-inline 0.1s linear, max-width 0.15s linear, left 0.1s linear;
+    padding-inline 0.1s linear, max-width 0.15s linear, left 0.1s linear,
+    transform-origin 0.15s linear;
 `;
