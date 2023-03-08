@@ -4,6 +4,7 @@ import { Container } from "@common/components";
 export const AuthContainer = styled(Container)`
   min-height: calc(100vh - var(--headerHeigth));
   overflow: hidden;
+  padding: 2em 2em;
 `;
 
 export const FormImageContainer = styled.div`

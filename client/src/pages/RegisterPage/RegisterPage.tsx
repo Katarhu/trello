@@ -54,7 +54,7 @@ export const RegisterPage = () => {
           delayMax={ANIMATION_DELAY_MAX}
         >
           <ParallaxItem center>
-            <Image src={RegisterImage} maxWidth="750px" fullWidth />
+            <Image src={RegisterImage} maxWidth="70vmin" fullWidth />
           </ParallaxItem>
         </AppearAnimation>
       </FormImageContainer>

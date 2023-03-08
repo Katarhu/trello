@@ -71,7 +71,6 @@ export const TextField = memo(
           inputStyle={inputStyle}
           isError={isError}
         >
-          {labelItem}
           <AppTextField
             id={id}
             isError={isError}
@@ -81,6 +80,7 @@ export const TextField = memo(
             type={inputType}
             {...props}
           />
+          {labelItem}
           <ErrorTooltip errors={errors} touched={touched} />
         </TextFieldContainer>
         {helperContainer}

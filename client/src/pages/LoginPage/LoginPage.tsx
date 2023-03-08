@@ -123,7 +123,7 @@ export const LoginPage = () => {
           delayMax={ANIMATION_DELAY_MAX}
         >
           <ParallaxItem center>
-            <Image src={LoginImage} maxWidth="750px" fullWidth />
+            <Image src={LoginImage} maxWidth="70vmin" fullWidth contain />
           </ParallaxItem>
         </AppearAnimation>
       </FormImageContainer>

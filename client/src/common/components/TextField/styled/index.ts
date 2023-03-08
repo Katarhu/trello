@@ -26,8 +26,8 @@ export const outlinedContainerCss = css<{ isError: boolean }>`
       isError ? theme["red-700"] : theme["blue-700"]};
   }
 
-  &:focus-within,
-  &:has(input:not(:placeholder-shown)) {
+  & input:not(:placeholder-shown) + label,
+  &:focus-within {
     --labelTranslateY: -210%;
     --labelScale: 0.85;
     --labelPaddingInline: 0.35em;
@@ -67,8 +67,8 @@ export const filledContainerCss = css<{ isError: boolean }>`
       isError ? theme["red-700"] : theme["blue-700"]};
   }
 
-  &:focus-within,
-  &:has(input:not(:placeholder-shown)) {
+  & input:not(:placeholder-shown) + label,
+  &:focus-within {
     --labelTranslateY: -130%;
     --labelScale: 0.8;
     --labelWidth: ${({ isError }) =>
